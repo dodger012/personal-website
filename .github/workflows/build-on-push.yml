@@ -19,15 +19,15 @@ jobs:
           node-version: '12.x'
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+				uses: actions/cache@v2
+				env: # Or as an environment variable
+					CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+					CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-				env: # Or as an environment variable
-					CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
-					CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
       - run: npm ci
       - run: npm run build
 
